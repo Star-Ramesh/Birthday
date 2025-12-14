@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center min-vh-100">
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+            <div class="card shadow-lg border-0 rounded-4">
+                <!-- Screen -->
+                <div class="bg-dark text-white p-4 text-end fs-1" id="screen">
+                    0
+                </div>
+
+                <!-- Buttons -->
+                <div class="p-3">
+                    <div class="row g-2">
+                        <div class="col-3"><button class="btn btn-danger w-100 py-3 fs-4" onclick="clearAll()">C</button></div>
+                        <div class="col-3"><button class="btn btn-secondary w-100 py-3 fs-4" onclick="deleteOne()">⌫</button></div>
+                        <div class="col-3"><button class="btn btn-warning w-100 py-3 fs-4" onclick="addToScreen('/')">÷</button></div>
+                        <div class="col-3"><button class="btn btn-warning w-100 py-3 fs-4" onclick="addToScreen('*')">×</button></div>
+
+                        <div class="col-3"><button class="btn btn-light w-100 py-3 fs-4" onclick="addToScreen('7')">7</button></div>
+                        <div class="col-3"><button class="btn btn-light w-100 py-3 fs-4" onclick="addToScreen('8')">8</button></div>
+                        <div class="col-3"><button class="btn btn-light w-100 py-3 fs-4" onclick="addToScreen('9')">9</button></div>
+                        <div class="col-3"><button class="btn btn-warning w-100 py-3 fs-4" onclick="addToScreen('-')">−</button></div>
+
+                        <div class="col-3"><button class="btn btn-light w-100 py-3 fs-4" onclick="addToScreen('4')">4</button></div>
+                        <div class="col-3"><button class="btn btn-light w-100 py-3 fs-4" onclick="addToScreen('5')">5</button></div>
+                        <div class="col-3"><button class="btn btn-light w-100 py-3 fs-4" onclick="addToScreen('6')">6</button></div>
+                        <div class="col-3"><button class="btn btn-warning w-100 py-3 fs-4" onclick="addToScreen('+')">+</button></div>
+
+                        <div class="col-3"><button class="btn btn-light w-100 py-3 fs-4" onclick="addToScreen('1')">1</button></div>
+                        <div class="col-3"><button class="btn btn-light w-100 py-3 fs-4" onclick="addToScreen('2')">2</button></div>
+                        <div class="col-3"><button class="btn btn-light w-100 py-3 fs-4" onclick="addToScreen('3')">3</button></div>
+                        <div class="col-3"><button class="btn btn-success w-100 py-5 fs-3" onclick="calculate()">=</button></div>
+
+                        <div class="col-6"><button class="btn btn-light w-100 py-3 fs-4" onclick="addToScreen('0')">0</button></div>
+                        <div class="col-3"><button class="btn btn-light w-100 py-3 fs-4" onclick="addToScreen('.')">.</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // This gets the screen where numbers show
+    let screen = document.getElementById('screen');
+
+    // This function adds a number or symbol to the screen
+    function addToScreen(value) {
+        // If screen shows 0, replace it with the new number
+        if (screen.innerText === '0') {
+            screen.innerText = value;
+        } else {
+            // Otherwise, add the new value at the end
+            screen.innerText = screen.innerText + value;
+        }
+    }
+
+    // This clears everything and shows 0
+    function clearAll() {
+        screen.innerText = '0';
+    }
+
+    // This deletes the last character
+    function deleteOne() {
+        // Remove the last letter/number
+        let current = screen.innerText;
+        screen.innerText = current.slice(0, -1);
+        
+        // If nothing is left, show 0
+        if (screen.innerText === '') {
+            screen.innerText = '0';
+        }
+    }
+
+    // This calculates the result when = is pressed
+    function calculate() {
+        try {
+            // Change ÷ to / and × to * so JavaScript understands
+            let math = screen.innerText
+                .replace(/÷/g, '/')
+                .replace(/×/g, '*');
+
+            // Do the math and show the answer
+            screen.innerText = eval(math);
+        } catch {
+            // If something is wrong (like 5++3), show Error
+            screen.innerText = 'Error';
+        }
+    }
+</script>
+
+</body>
+</html>
